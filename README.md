@@ -153,3 +153,15 @@ Kết quả :
 * Dự đoán **Nữ** có precision cao nhưng recall thấp hơn (0.83)
 * Một số mẫu nữ bị nhầm sang nam (65 trường hợp)
 
+Ma trận nhầm lẫn giới tính :
+<img width="653" height="543" alt="ma_tran_nham_lan" src="https://github.com/user-attachments/assets/8fd55419-b468-447b-98fc-5ce08cd35a6c" />
+
+Biểu đồ phân bố dự đoán tuổi :
+<img width="668" height="566" alt="phan_bo_tuoi" src="https://github.com/user-attachments/assets/acd3183a-6a31-4440-9fae-bc867770e800" />
+
+Demo:
+
+<img width="674" height="840" alt="image" src="https://github.com/user-attachments/assets/07cf88b2-07b0-44c5-bb45-28dfd6e2119f" />
+
+
+
