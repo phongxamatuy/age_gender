@@ -113,3 +113,33 @@ class MyModel(keras.Model):
         return  {
     'age': age,
     'gender': gender}
+
+Kết quả :
+
+1. ĐÁNH GIÁ TỔNG QUAN TỪ KERAS
+
+- loss: 1.1420
+- compile_metrics: 76.5896
+- age_loss: 0.3761
+- gender_loss: 6.3894
+
+
+ 2. BÁO CÁO PHÂN LOẠI CHI TIẾT - GIỚI TÍNH
+
+              precision    recall  f1-score   support
+
+     Nam (0)       0.86      0.94      0.89       411
+      Nữ (1)       0.93      0.83      0.88       389
+
+    accuracy                           0.89       800
+   macro avg       0.89      0.88      0.89       800
+weighted avg       0.89      0.89      0.89       800
+
+
+ 3. MA TRẬN NHẦM LẪN (CONFUSION MATRIX)
+
+                  | Đoán: Nam (0)   | Đoán: Nữ (1)   
+-------------------------------------------------------
+Thực tế: Nam (0)  | 385             | 26             
+Thực tế: Nữ (1)   | 65              | 324            
+
