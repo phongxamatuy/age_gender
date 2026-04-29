@@ -13,6 +13,7 @@ Python
 Mô hình : mô phỏng lại kết nối dư của Resnet , sử dụng các khối (block)
 
 class ResidualBlock(keras.Model):
+    
     def __init__(self, filters, stride=1):
         super().__init__()
         
@@ -55,6 +56,7 @@ class ResidualBlock(keras.Model):
         return tf.nn.relu(x)
 
 class MyModel(keras.Model):
+  
     def __init__(self):
         super().__init__()
         self.rescale = layers.Rescaling(1./255)
