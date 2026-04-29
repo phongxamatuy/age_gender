@@ -5,6 +5,108 @@
 Giới thiệu : Mô hình dự đoán tuổi và giới tính thông qua hình ảnh .
 
 Công nghệ sử dụng:
+
 Tensorflow, keras
+
 Python
 
+Mô hình : mô phỏng lại kết nối dư của Resnet , sử dụng các khối (block)
+
+class ResidualBlock(keras.Model):
+    def __init__(self, filters, stride=1):
+        super().__init__()
+        
+        self.conv1 = layers.Conv2D(filters, (3,3),
+                                   strides=stride,
+                                   padding='same',
+                                   use_bias=False)
+        self.bn1 = layers.BatchNormalization()
+
+        self.conv2 = layers.Conv2D(filters, (3,3),
+                                   padding='same',
+                                   use_bias=False)
+        self.bn2 = layers.BatchNormalization()
+
+        self.shortcut_conv = layers.Conv2D(filters, (1,1),
+                                           strides=stride,
+                                           padding='same',
+                                           use_bias=False)
+        self.shortcut_bn = layers.BatchNormalization()
+
+        self.stride = stride
+        self.filters = filters
+
+    def call(self, x, training=False):
+        shortcut = x
+
+        x = self.conv1(x)
+        x = self.bn1(x, training=training)
+        x = tf.nn.relu(x)
+
+        x = self.conv2(x)
+        x = self.bn2(x, training=training)
+
+        # projection shortcut
+        if self.stride != 1 or shortcut.shape[-1] != self.filters:
+            shortcut = self.shortcut_conv(shortcut)
+            shortcut = self.shortcut_bn(shortcut, training=training)
+
+        x = x + shortcut
+        return tf.nn.relu(x)
+
+class MyModel(keras.Model):
+    def __init__(self):
+        super().__init__()
+        self.rescale = layers.Rescaling(1./255)
+        self.conv1 = layers.Conv2D(32,(3,3),padding='same',use_bias=False)
+        self.bn1 = layers.BatchNormalization()
+
+        self.res1 = ResidualBlock(32)
+        self.res2 = ResidualBlock(32)
+
+        self.res3 = ResidualBlock(64, stride=2)
+        self.res4 = ResidualBlock(64)
+
+        self.res5 = ResidualBlock(128, stride=2)
+        self.res6 = ResidualBlock(128)
+
+        self.res7 = ResidualBlock(256, stride=2)
+        self.res8 = ResidualBlock(256)
+
+        self.res9 = ResidualBlock(512, stride=2)
+        self.res10 = ResidualBlock(512)
+        
+        self.gap = layers.GlobalAveragePooling2D()  
+        self.drop = layers.Dropout(0.5)
+        self.age_head = layers.Dense(1, activation='linear', name='age')
+        self.gender_head = layers.Dense(1, activation='sigmoid', name='gender')
+
+    def call(self, x, training=False):
+        x = self.conv1(x)
+        x = self.bn1(x, training=training)
+        x = tf.nn.relu(x)
+
+        x = self.res1(x, training=training)
+        x = self.res2(x, training=training)
+
+        x = self.res3(x, training=training)
+        x = self.res4(x, training=training)
+
+        x = self.res5(x, training=training)
+        x = self.res6(x, training=training)
+
+        x = self.res7(x, training=training)
+        x = self.res8(x, training=training)
+
+        x = self.res9(x, training=training)
+        x = self.res10(x, training=training)
+
+        x = self.gap(x)
+        x = self.drop(x, training=training)
+        age = self.age_head(x)
+        gender = self.gender_head(x)
+        
+        return  {
+    'age': age,
+    'gender': gender
+}
