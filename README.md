@@ -123,23 +123,33 @@ Kết quả :
 - age_loss: 0.3761
 - gender_loss: 6.3894
 
+##  Kết quả phân loại giới tính
 
- 2. BÁO CÁO PHÂN LOẠI CHI TIẾT - GIỚI TÍNH
+###  Classification Report
 
-              precision    recall  f1-score   support
+| Lớp              | Precision | Recall | F1-score | Support |
+| ---------------- | --------- | ------ | -------- | ------- |
+| Nam (0)          | 0.86      | 0.94   | 0.89     | 411     |
+| Nữ (1)           | 0.93      | 0.83   | 0.88     | 389     |
+| **Accuracy**     |           |        | **0.89** | 800     |
+| **Macro Avg**    | 0.89      | 0.88   | 0.89     | 800     |
+| **Weighted Avg** | 0.89      | 0.89   | 0.89     | 800     |
 
-     Nam (0)       0.86      0.94      0.89       411
-      Nữ (1)       0.93      0.83      0.88       389
+---
 
-    accuracy                           0.89       800
-   macro avg       0.89      0.88      0.89       800
-weighted avg       0.89      0.89      0.89       800
+###  Confusion Matrix
 
+|                      | Dự đoán: Nam (0) | Dự đoán: Nữ (1) |
+| -------------------- | ---------------- | --------------- |
+| **Thực tế: Nam (0)** | 385              | 26              |
+| **Thực tế: Nữ (1)**  | 65               | 324             |
 
- 3. MA TRẬN NHẦM LẪN (CONFUSION MATRIX)
+---
 
-                  | Đoán: Nam (0)   | Đoán: Nữ (1)   
--------------------------------------------------------
-Thực tế: Nam (0)  | 385             | 26             
-Thực tế: Nữ (1)   | 65              | 324            
+###  Nhận xét
+
+* Mô hình đạt độ chính xác **89%** trên tập kiểm tra
+* Dự đoán **Nam** khá tốt (recall cao 0.94)
+* Dự đoán **Nữ** có precision cao nhưng recall thấp hơn (0.83)
+* Một số mẫu nữ bị nhầm sang nam (65 trường hợp)
 
