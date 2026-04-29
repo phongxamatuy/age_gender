@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dự đoán Tuổi & Giới tính</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500&display=swap"/>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+  <div class="noise"></div>
+  <div class="glow glow-1"></div>
+  <div class="glow glow-2"></div>
+
+  <div class="container">
+
+    <header class="header">
+      <div class="badge">
+        <span class="badge-dot"></span>
+        AI · Nhận diện khuôn mặt
+      </div>
+      <h1>Tuổi &amp; <em>Giới tính</em></h1>
+      <p class="subtitle">Upload ảnh khuôn mặt — AI phân tích ngay lập tức</p>
+    </header>
+
+    <div class="card upload-card">
+
+      <div class="drop-zone" id="dropZone">
+        <input type="file" id="fileInput" accept="image/*" hidden/>
+
+        <div class="drop-idle" id="dropIdle">
+          <div class="upload-icon">
+            <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="32" cy="24" r="10" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+              <path d="M12 52c0-11.046 8.954-20 20-20s20 8.954 20 20" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+              <path d="M46 14v12M40 20h12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <p class="drop-title">Kéo thả ảnh khuôn mặt</p>
+          <p class="drop-hint">hoặc nhấn nút bên dưới để chọn ảnh</p>
+          <div class="format-tags">
+            <span>JPG</span><span>PNG</span><span>WEBP</span>
+          </div>
+        </div>
+
+        <div class="drop-preview" id="dropPreview" style="display:none">
+          <img id="previewImg" src="" alt="preview"/>
+          <button class="btn-remove" id="removeBtn" title="Xóa ảnh">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Nút chọn file + nút phân tích -->
+      <div class="btn-row">
+        <button class="btn-choose" id="chooseBtn">
+          <svg viewBox="0 0 24 24" fill="none" width="16" height="16">
+            <path d="M4 20h16M12 4v12M8 8l4-4 4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Chọn ảnh từ máy
+        </button>
+        <button class="btn-predict" id="predictBtn" disabled>
+          <span class="btn-inner">
+            <svg viewBox="0 0 24 24" fill="none" width="17" height="17"><path d="M9.5 3H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-4.5M21 3l-9 9M15 3h6v6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Phân tích ngay
+          </span>
+          <span class="btn-loading" style="display:none">
+            <span class="ring"></span>
+            Đang xử lý...
+          </span>
+        </button>
+      </div>
+
+    </div>
+
+    <div class="result-section" id="resultSection" style="display:none">
+
+      <div class="result-row">
+
+        <div class="card result-card age-card">
+          <div class="rc-label">Tuổi dự đoán</div>
+          <div class="rc-value" id="ageValue">—</div>
+          <div class="rc-sub">tuổi</div>
+          <div class="age-bar-wrap">
+            <div class="age-bar" id="ageBar" style="width:0%"></div>
+          </div>
+          <div class="age-range">
+            <span>0</span><span>100</span>
+          </div>
+        </div>
+
+        <div class="card result-card gender-card">
+          <div class="rc-label">Giới tính</div>
+          <div class="gender-icon" id="genderIcon"></div>
+          <div class="rc-value gender-val" id="genderValue">—</div>
+          <div class="rc-conf" id="genderConf">—</div>
+        </div>
+
+      </div>
+
+      <div class="error-box" id="errorBox" style="display:none"></div>
+
+    </div>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
